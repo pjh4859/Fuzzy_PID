@@ -1,3 +1,6 @@
+#ifndef __Quaternion_H__
+#define __Quaternion_H__
+
 #include <math.h>
 
 extern float twoKp;											// 2 * proportional gain (Kp)
@@ -19,3 +22,6 @@ extern volatile float beta;				// algorithm gain
 
 void MadgwickAHRSupdate(float ax, float ay, float az, float gx, float gy, float gz, float mx, float my, float mz);
 void MadgwickAHRSupdateIMU(float ax, float ay, float az, float gx, float gy, float gz);
+
+
+#endif

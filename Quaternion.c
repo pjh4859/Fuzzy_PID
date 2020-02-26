@@ -3,7 +3,7 @@
 
 #include "Quaternion.h"
 
-#define Kp      (2.0f * 6.0f) // these are the free parameters in the Mahony filter and fusion scheme, Kp for proportional feedback, Ki for integral
+#define Kp      (2.0f * 8.0f) // these are the free parameters in the Mahony filter and fusion scheme, Kp for proportional feedback, Ki for integral
 #define Ki      (2.0f * 0.005f)
 #define PI      (3.141592f)
 
@@ -15,7 +15,7 @@ float q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;			// quaternion of sensor fram
 float integralFBx = 0.0f,  integralFBy = 0.0f, integralFBz = 0.0f;	// integral error terms scaled by Ki
 
 extern float q[4];
-extern float eInt[3];// vector to hold integral error for Mahony method
+//extern float eInt[3];// vector to hold integral error for Mahony method
 extern float deltat;// integration interval for both filter schemes
 extern float Euler_angle[3];
 

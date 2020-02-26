@@ -21,9 +21,10 @@ _Fuzzy_stru Kp_small, Kp_medismall, Kp_medium, Kp_medilarge, Kp_large;
 _Fuzzy_stru Ki_small, Ki_medismall, Ki_medium, Ki_medilarge, Ki_large;
 _Fuzzy_stru Kd_small, Kd_medismall, Kd_medium, Kd_medilarge, Kd_large;
 
-const float Kp_s = 1.2f, Kp_m = 2.5f, Kp_b = 3.8f, Kp_vb = 6.0f;
-const float Ki_s = 0.003f, Ki_m = 0.005f, Ki_b = 0.007f, Ki_vb = 0.009f;
-const float Kd_s = 0.003f, Kd_m = 0.005f, Kd_b = 0.007f, Kd_vb = 0.009f;
+
+const float Kp_s = 1.0f, Kp_m = 1.5f, Kp_b = 2.0f, Kp_vb = 2.5f;
+const float Ki_s = 0.1f, Ki_m = 0.25f, Ki_b = 0.35f, Ki_vb = 0.009f;
+const float Kd_s = 0.1f, Kd_m = 0.15f, Kd_b = 0.2f, Kd_vb = 2.2f;
 
 float Rule_Base[5][5][3] = {{{101.0f, 14.0f, 4.0f}, {101.0f, 14.0f, 4.0f}, {103.0f, 12.0f, 1.0f}, {104.0f, 14.0f, 1.0f}, {102.0f, 14.0f, 3.0f}},
                             {{101.0f, 14.0f, 4.0f}, {102.0f, 13.0f, 4.0f}, {104.0f, 11.0f, 2.0f}, {103.0f, 13.0f, 2.0f}, {102.0f, 14.0f, 4.0f}},
@@ -73,7 +74,7 @@ void fuzzy_init() {
         for (j = 0; j < 5; j++) 
         {
           Fuzzy_Matrix[i][j].Fuzzy_Val = 0.0f;
-          Fuzzy_Matrix[i][j].index = i + j + 1;
+          //Fuzzy_Matrix[i][j].index = i + j + 1;
           Fuzzy_Matrix[i][j].Selected_PID[0]=Rule_Base[i][j][0];
           Fuzzy_Matrix[i][j].Selected_PID[1]=Rule_Base[i][j][1];
           Fuzzy_Matrix[i][j].Selected_PID[2]=Rule_Base[i][j][2];
