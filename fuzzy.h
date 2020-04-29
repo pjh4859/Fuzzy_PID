@@ -11,16 +11,16 @@
 
 typedef struct __fuzzy_stru
 {
-    float Fuzzy_Val;
-    //uint8_t index;
-    float Selected_PID[3];
-
+    float Fuzzy_Val[3];
+    float Selected_P[3];
+    float Selected_I[3];
+    float Selected_D[3];
 }_Fuzzy_stru;
 
 void fuzzy_init();
 void Fuzzification(float setting_angle, float Euler_angle, float *prev_err);
-void Create_Fuzzy_Matrix();
-void Defuzzification(float *Kp, float *Ki, float *Kd);
-void Find_Maxarr(_Fuzzy_stru flagarr[], int flag, int flag2);
+void Create_Fuzzy_Matrix(uint8_t flag);
+void Defuzzification(float *Kp, float *Ki, float *Kd, uint8_t flag);
+void Find_Maxarr(_Fuzzy_stru flagarr[], int flag, int flag2, uint8_t flag3);
 
 #endif
