@@ -1,65 +1,21 @@
 #include "PWM.h"
 
-
-
-void Motor_Test(void)
-{
-  int i = 0;
-  for (i = MIN_PULSE; i < MAX_PULSE;)
-  {
-          //  TIM2->CCR1 = i;
-          MOTOR_V1 = i;
-          MOTOR_V2 = i;
-          MOTOR_V3 = i;
-          MOTOR_V4 = i;
-          HAL_Delay(100);
-          i += 50;
-  }
-}
-
-void Motor_Test_2(void)
-{
-  int i = 0;
-  int a = 0;
-  int b = 9700;
-  for (i = MIN_PULSE; i < 9700;)
-  {
-          //  TIM2->CCR1 = i;
-          MOTOR_V1 = i;
-          MOTOR_V2 = i;
-          MOTOR_V3 = i;
-          MOTOR_V4 = i;
-          HAL_Delay(100);
-          i += 10;
-  }
-  for (i = 9700; i < 10500;)
-  {
-          //  TIM2->CCR1 = i;
-          MOTOR_V1 = i;
-          MOTOR_V2 = i;
-          MOTOR_V3 = b - a;
-          MOTOR_V4 = i;
-          HAL_Delay(100);
-          i += 10;
-          a += 10;
-  }
-}
-
 void ESC_Calibration(void)
 {
   //  TIM2->CCR1 = 15500;
-  TIM2->CCR1 = MAX_PULSE;
+  TIM5->CCR1 = MAX_PULSE;
   TIM2->CCR2 = MAX_PULSE;
+  TIM2->CCR1 = MAX_PULSE;
   TIM3->CCR1 = MAX_PULSE;
-  TIM3->CCR2 = MAX_PULSE;
   HAL_Delay(5000);
   //  TIM2->CCR1 = 8500;
-  TIM2->CCR1 = MIN_PULSE;
+  TIM5->CCR1 = MIN_PULSE;
   TIM2->CCR2 = MIN_PULSE;
+  TIM2->CCR1 = MIN_PULSE;
   TIM3->CCR1 = MIN_PULSE;
-  TIM3->CCR2 = MIN_PULSE;
   HAL_Delay(4000);
 }
+
 
 void Motor_Init(void)
 {
@@ -77,64 +33,9 @@ void Motor_Start(void)
   MOTOR_V2 = MIN_PULSE + 700;
   MOTOR_V3 = MIN_PULSE + 700;
   MOTOR_V4 = MIN_PULSE + 700;
-  //HAL_Delay(100);
-  
-  //MOTOR_V1 += 100;
-  //MOTOR_V2 += 100;
-  //MOTOR_V3 += 100;
-  //MOTOR_V4 += 100;
-  ////HAL_Delay(100);
-  //
-  //MOTOR_V1 += 100;
-  //MOTOR_V2 += 100;
-  //MOTOR_V3 += 100;
-  //MOTOR_V4 += 100;
-  ////HAL_Delay(100);
-  //
-  //MOTOR_V1 += 100;
-  //MOTOR_V2 += 100;
-  //MOTOR_V3 += 100;
-  //MOTOR_V4 += 100;
-  ////HAL_Delay(100);
-  //
-  //MOTOR_V1 += 100;
-  //MOTOR_V2 += 100;
-  //MOTOR_V3 += 100;
-  //MOTOR_V4 += 100;
-  ////HAL_Delay(100);
-  //
-  //MOTOR_V1 += 100;
-  //MOTOR_V2 += 100;
-  //MOTOR_V3 += 100;
-  //MOTOR_V4 += 100;
-  ////HAL_Delay(100);
-  //
-  //MOTOR_V1 += 100;
-  //MOTOR_V2 += 100;
-  //MOTOR_V3 += 100;
-  //MOTOR_V4 += 100;
-  ////HAL_Delay(100);
-  //
-  //MOTOR_V1 += 100;
-  //MOTOR_V2 += 100;
-  //MOTOR_V3 += 100;
-  //MOTOR_V4 += 100;
-  ////HAL_Delay(100);
-  //
-  //MOTOR_V1 += 100;
-  //MOTOR_V2 += 100;
-  //MOTOR_V3 += 100;
-  //MOTOR_V4 += 100;
-  ////HAL_Delay(100);
-  //
-  //MOTOR_V1 += 100;
-  //MOTOR_V2 += 100;
-  //MOTOR_V3 += 100;
-  //MOTOR_V4 += 100;
-  ////HAL_Delay(100);
 }
 
-void Motor_Stop(int count)
+void Motor_Stop(int count, uint32_t before_while)
 {
   if (HAL_GetTick() - before_while > count)
   {
@@ -143,4 +44,72 @@ void Motor_Stop(int count)
      MOTOR_V3 = MIN_PULSE;
      MOTOR_V4 = MIN_PULSE;
   }
+}
+
+void Motor_Drive(int Throttle, float *PID)
+{
+  if (Throttle <= 5)
+  {
+    MOTOR_V1 = MIN_PULSE;
+    MOTOR_V2 = MIN_PULSE;
+    MOTOR_V3 = MIN_PULSE;
+    MOTOR_V4 = MIN_PULSE;
+  }
+  
+  else if (Throttle > 5)    //Controller_1
+  {     
+//    if (fabs(Euler_angle[0]) > 15.0f || fabs(Euler_angle[1]) > 15.0f)    //Restrict yaw acting Euler angle.
+//    {           
+//      pid.output[2] = 0.0f;
+//    }         
+    
+    //MOTOR_V1 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * pid.output[0]) - (int)(MoterGain_pitch * pid.output[1]) + (int)(MoterGain_yaw * pid.output[2]);
+    
+    //MOTOR_V1 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * PID[0]) - (int)(MoterGain_roll * PID[1]) + (int)(MoterGain_roll * PID[2]);
+    MOTOR_V1 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * PID[0]);
+    //MOTOR_V1 = MIN_PULSE + (Throttle * 65) - (int)(MoterGain_roll * PID[1]);
+    //MOTOR_V1 = MIN_PULSE + (Throttle * 65) - (int)(MoterGain_roll * PID[2]);
+  
+    //MOTOR_V2 = MIN_PULSE + (Throttle * 65) - (int)((MoterGain_roll) * pid.output[0]) - (int)((MoterGain_pitch) * pid.output[1]) - (int)(MoterGain_yaw * pid.output[2]);
+    
+    //MOTOR_V2 = MIN_PULSE + (Throttle * 65) - (int)(MoterGain_roll * PID[0]) - (int)(MoterGain_roll * PID[1]) - (int)(MoterGain_roll * PID[2]);
+    MOTOR_V2 = MIN_PULSE + (Throttle * 65) - (int)(MoterGain_roll * PID[0]);
+    //MOTOR_V2 = MIN_PULSE + (Throttle * 65) - (int)(MoterGain_roll * PID[1]);
+    //MOTOR_V2 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * PID[2]);
+  
+    //MOTOR_V3 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * pid.output[0]) + (int)(MoterGain_pitch * pid.output[1]) - (int)(MoterGain_yaw * pid.output[2]);
+    
+    //MOTOR_V3 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * PID[0]) + (int)(MoterGain_roll * PID[1]) - (int)(MoterGain_roll * PID[2]);
+    MOTOR_V3 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * PID[0]);
+    //MOTOR_V3 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * PID[1]);
+    //MOTOR_V3 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * PID[2]);
+    
+    //MOTOR_V4 = MIN_PULSE + (Throttle * 65) - (int)((MoterGain_roll) * pid.output[0]) + (int)((MoterGain_pitch) * pid.output[1]) + (int)(MoterGain_yaw * pid.output[2]); 
+    
+    //MOTOR_V4 = MIN_PULSE + (Throttle * 65) - (int)(MoterGain_roll * PID[0]) + (int)(MoterGain_roll * PID[1]) + (int)(MoterGain_roll * PID[2]);
+    MOTOR_V4 = MIN_PULSE + (Throttle * 65) - (int)(MoterGain_roll * PID[0]);
+    //MOTOR_V4 = MIN_PULSE + (Throttle * 65) + (int)(MoterGain_roll * PID[1]);
+    //MOTOR_V4 = MIN_PULSE + (Throttle * 65) - (int)(MoterGain_roll * PID[2]);
+    
+    
+    if (MOTOR_V1 >= MAX_PULSE - MOTER_SAFTY)
+      MOTOR_V1 = MAX_PULSE -  MOTER_SAFTY;
+    else if (MOTOR_V1 <= MIN_PULSE + 700)
+      MOTOR_V1 = MIN_PULSE + 700;
+    
+    if (MOTOR_V2 >= MAX_PULSE - MOTER_SAFTY)
+      MOTOR_V2 = MAX_PULSE - MOTER_SAFTY;
+    else if (MOTOR_V2 <= MIN_PULSE + 700)
+      MOTOR_V2 = MIN_PULSE + 700;
+    
+    if (MOTOR_V3 >= MAX_PULSE - MOTER_SAFTY)
+      MOTOR_V3 = MAX_PULSE - MOTER_SAFTY;
+    else if (MOTOR_V3 <= MIN_PULSE + 700)
+      MOTOR_V3 = MIN_PULSE + 700;
+    
+    if (MOTOR_V4 >= MAX_PULSE - MOTER_SAFTY)
+      MOTOR_V4 = MAX_PULSE - MOTER_SAFTY;
+    else if (MOTOR_V4 <= MIN_PULSE + 700)
+      MOTOR_V4 = MIN_PULSE + 700;
+   }
 }
