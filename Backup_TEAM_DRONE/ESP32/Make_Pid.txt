@@ -1,0 +1,143 @@
+void uart_recv_val(uint8_t* arr)
+{
+  char pid_buf[7]={0,};
+    memset(pid_buf,'\0',sizeof(pid_buf));
+    switch(arr[6])
+    {
+      case '1' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        inpid_val[0][0] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case '2' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        inpid_val[0][1] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case '3' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        inpid_val[0][2] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+        case '4' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        inpid_val[1][0] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case '5' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        inpid_val[1][1] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case '6' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        inpid_val[1][2] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+        case '7' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        inpid_val[2][0] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case '8' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        inpid_val[2][1] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case '9' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        inpid_val[2][2] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+        
+      case 'a' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        pid_val[0][0] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case 'b' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        pid_val[0][1] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case 'c' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        pid_val[0][2] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+        case 'd' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        pid_val[1][0] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case 'e' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        pid_val[1][1] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case 'f' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        pid_val[1][2] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      case 'g' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        pid_val[2][0] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+     case 'h' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        pid_val[2][1] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+     case 'i' :
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+        pid_val[2][2] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+    case 'T':
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+       *Controller_1 = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+    case 'R':
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+       setting_angle[0] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+    case 'P':
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+       setting_angle[1] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+    case 'Y':
+        memcpy(pid_buf,arr,6);
+        pid_buf[6] = '\0';
+       setting_angle[2] = atof(pid_buf);
+        memset(pid_buf,'\0',sizeof(pid_buf));
+        break;
+      
+      default: break;
+  }
+}
